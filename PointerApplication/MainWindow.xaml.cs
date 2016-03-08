@@ -36,6 +36,7 @@ namespace PointerApplication
                     if (positionData.ScreenPosition >= Screen.AllScreens.Count())
                         positionData.ScreenPosition = 0;
                     Rectangle selectedScreen = Screen.AllScreens[positionData.ScreenPosition].Bounds;
+                    var screenDimensionDivisor = selectedScreen.Width > 1280 ? 2 : 1;
                     Dispatcher.InvokeAsync(() =>
                     {
                         var screenWidthPercentage = positionData.HorizontalPosition / CLIENT_DISPLAY_WIDTH;
@@ -43,8 +44,8 @@ namespace PointerApplication
                         var screenPositionX = screenWidthPercentage * selectedScreen.Width;
                         var screenPositionY = screenHeightPercentage * selectedScreen.Height;
 
-                        this.Left = (screenPositionX + selectedScreen.X) / 2;
-                        this.Top = (screenPositionY + selectedScreen.Y) /2;
+                        this.Left = (screenPositionX + selectedScreen.X) / screenDimensionDivisor;
+                        this.Top = (screenPositionY + selectedScreen.Y) / screenDimensionDivisor;
 
                         this.Show();
                         this.Activate();
